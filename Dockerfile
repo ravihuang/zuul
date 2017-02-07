@@ -14,8 +14,7 @@ ENV GERRIT_INIT_ARGS ""
 RUN adduser -D -h "${GERRIT_HOME}" -g "Gerrit User" -s /sbin/nologin "${GERRIT_USER}"
 
 RUN set -x \
-    && apk add --update --no-cache git openssh openssl bash perl perl-cgi git-gitweb curl
-
+    && apk add --update --no-cache git openssh openssl bash perl perl-cgi git-gitweb curl python vi
 # Grab gosu for easy step-down from root
 ENV GOSU_VERSION 1.9
 RUN set -x \
@@ -84,7 +83,8 @@ RUN chmod +x /gerrit*.sh
 RUN gosu ${GERRIT_USER} mkdir -p $GERRIT_SITE && \
     git config --global core.quotepath false && \
     git config --global i18n.logoutputencoding utf8 && \
-    git config --global i18n.commitencoding utf8
+    git config --global i18n.commitencoding utf8 && \
+    pip install zuul
 
 #Gerrit site directory is a volume, so configuration and repositories
 #can be persisted and survive image upgrades.
