@@ -81,7 +81,10 @@ RUN chmod +x /gerrit*.sh
 
 #A directory has to be created before a volume is mounted to it.
 #So gerrit user can own this directory.
-RUN gosu ${GERRIT_USER} mkdir -p $GERRIT_SITE
+RUN gosu ${GERRIT_USER} mkdir -p $GERRIT_SITE && \
+    git config --global core.quotepath false && \
+    git config --global i18n.logoutputencoding utf8 && \
+    git config --global i18n.commitencoding utf8
 
 #Gerrit site directory is a volume, so configuration and repositories
 #can be persisted and survive image upgrades.
