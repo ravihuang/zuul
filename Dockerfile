@@ -8,3 +8,4 @@ RUN apk add nginx apache2-utils && \
     git config --global i18n.commitencoding utf8
 
 COPY nginx.conf /etc/nginx/
+COPY start_nginx.sh /docker-entrypoint-init.d/
