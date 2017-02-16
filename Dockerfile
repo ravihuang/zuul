@@ -9,3 +9,4 @@ RUN apk add nginx apache2-utils && \
 
 COPY nginx.conf /etc/nginx/
 COPY start_nginx.sh /docker-entrypoint-init.d/
+COPY gerrit-entrypoint.sh /
