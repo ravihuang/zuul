@@ -163,8 +163,9 @@ if [ "$1" = "/gerrit-start.sh" ]; then
 
   #Section plugin events-log
   #set_gerrit_config plugin.events-log.storeUrl "jdbc:h2:${GERRIT_SITE}/db/ChangeEvents"
+  #only for postgresql now
   set_gerrit_config plugin.events-log.storeDriver "org.postgresql.Driver"
-  set_gerrit_config plugin.events-log.storeUrl "jdbc:${DATABASE_TYPE}://${DB_PORT_5432_TCP_ADDR}/${DB_ENV_POSTGRES_DB}/ChangeEvents"                                     
+  set_gerrit_config plugin.events-log.storeUrl "jdbc:${DATABASE_TYPE}://${DB_PORT_5432_TCP_ADDR}/${DB_ENV_POSTGRES_DB}"                                     
   set_gerrit_config plugin.events-log.storeUsername "${DB_ENV_POSTGRES_USER}"                                                                                            
   set_gerrit_config plugin.events-log.storePassword "${DB_ENV_POSTGRES_PASSWORD}"    
 
