@@ -4,14 +4,14 @@
 
 ## Container Quickstart
   1. Initialize and start gerrit.
-     # mkdir ~/gerrit_volume
-    	# docker run --name pg-gerrit -p 5432:5432 -e POSTGRES_USER=gerrit2 -e POSTGRES_PASSWORD=gerrit -e POSTGRES_DB=reviewdb -d postgres
-	    # docker run --name gerrit --link pg-gerrit:db -v /~/gerrit_volume/:/var/gerrit/review_site -p 80:80 -p 29418:29418 -e GITWEB_IP=<your ip> -e AUTH_TYPE=HTTP -d ravihuang/gerrit
+     `# mkdir ~/gerrit_volume`
+     `# docker run --name pg-gerrit -p 5432:5432 -e POSTGRES_USER=gerrit2 -e POSTGRES_PASSWORD=gerrit -e POSTGRES_DB=reviewdb -d postgres`
+     `# docker run --name gerrit --link pg-gerrit:db -v /~/gerrit_volume/:/var/gerrit/review_site -p 80:80 -p 29418:29418 -e GITWEB_IP=<your ip> -e AUTH_TYPE=HTTP -d ravihuang/gerrit`
 
   2. Open your browser to http://<your ip>
      
   3. Default using HTTP authentication type
-     u/p: admin/passwd
+     `u/p: admin/passwd`
      
 ## Use another container as the gerrit site storage.
   1. Create a volume container.
@@ -22,7 +22,7 @@
 
     `docker run -d --volumes-from gerrit_volume -p 8080:8080 -p 29418:29418 ravihuang/gerrit`
 
-# Just import from openfrontier/gerrit：
+# The following content is imported from openfrontier/gerrit：
 ## Install plugins on start up.
   When calling gerrit init --batch, it is possible to list plugins to be installed with --install-plugin=<plugin_name>. This can be done using the GERRIT_INIT_ARGS environment variable. See [Gerrit Documentation](https://gerrit-review.googlesource.com/Documentation/pgm-init.html) for more information.
 
