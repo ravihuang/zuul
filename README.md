@@ -10,9 +10,12 @@
      # docker run --name gerrit --link pg-gerrit:db -v /~/gerrit_volume/:/var/gerrit/review_site -p 80:80 -p 29418:29418 -e GITWEB_IP=<your ip> -e AUTH_TYPE=HTTP -d ravihuang/gerrit
      ```
      
-  2. Open your browser to http://<your ip>
+  2. Open your browser to 
+  
+      `http://<your ip>`
      
   3. Default using HTTP authentication type
+  
      `u/p: admin/passwd`
      
 ## Use another container as the gerrit site storage.
