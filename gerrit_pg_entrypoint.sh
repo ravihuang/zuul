@@ -7,8 +7,8 @@ set_gerrit_config() {
 set_secure_config() {
   su-exec ${GERRIT_USER} git config -f "${GERRIT_SITE}/etc/secure.config" "$@"
 }
-export WEBURL = "http://127.0.0.1:8080"
-export DATABASE_TYPE = "postgresql"
+export WEBURL="http://127.0.0.1:8080"
+export DATABASE_TYPE="postgresql"
 export 
 
 /gerrit-entrypoint.sh
