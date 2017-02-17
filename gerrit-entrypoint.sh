@@ -172,13 +172,7 @@ if [ "$1" = "/gerrit-start.sh" ]; then
 
   #Section httpd
   set_gerrit_config httpd.listenUrl "proxy-http://*:8080/"
-  
-  #Events-log
-  set_gerrit_config plugin.events-log.storeDriver "org.postgresql.Driver"
-  set_gerrit_config plugin.events-log.storeUrl "jdbc:${DATABASE_TYPE}://${DB_PORT_5432_TCP_ADDR}/${DB_ENV_POSTGRES_DB}"                                     
-  set_gerrit_config plugin.events-log.storeUsername "${DB_ENV_POSTGRES_USER}"                                                                                            
-  set_secure_config plugin.events-log.storePassword "${DB_ENV_POSTGRES_PASSWORD}" 
-  
+    
   #Section gitweb
   set_gerrit_config gitweb.type "gitweb"
   [ -z "${GITWEB_IP}" ] ||  set_gerrit_config gitweb.url "http://${GITWEB_IP}/gitweb/gitweb.cgi"
