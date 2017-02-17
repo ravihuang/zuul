@@ -13,5 +13,5 @@ RUN apk add apache2 apache2-utils fcgi fcgiwrap && \
     git config --global core.quotepath false && \
     git config --global i18n.logoutputencoding utf8 && \
     git config --global i18n.commitencoding utf8 && \
-    chmod +x /gerrit*.sh && chmod +x /etc/init.d/fcgi-run && \
+    chmod +x /etc/init.d/fcgi-run && \
     chmod +x /usr/bin/spawn-fcgi
