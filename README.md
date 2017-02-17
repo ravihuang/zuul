@@ -1,44 +1,28 @@
 # Gerrit Docker image
- The Gerrit code review system with PostgreSQL and OpenLDAP integration supported.
- This image is based on the Alpine Linux project which makes this image smaller and faster than before.
-
-## Versions
- openfrontier/gerrit:latest -> 2.13.5
-
- openfrontier/gerrit:2.12.x -> 2.12.7
-
- openfrontier/gerrit:2.11.x -> 2.11.10
-
- openfrontier/gerrit:2.10.x -> 2.10.6
+ The Gerrit code review system with PostgreSQL, Nginx, Gitweb, and OpenLDAP integration supported.
+ This image is based on https://github.com/openfrontier/docker-gerrit
 
 ## Container Quickstart
   1. Initialize and start gerrit.
+     # mkdir ~/gerrit_volume
+    	# docker run --name pg-gerrit -p 5432:5432 -e POSTGRES_USER=gerrit2 -e POSTGRES_PASSWORD=gerrit -e POSTGRES_DB=reviewdb -d postgres
+	    # docker run --name gerrit --link pg-gerrit:db -v /~/gerrit_volume/:/var/gerrit/review_site -p 80:80 -p 29418:29418 -e GITWEB_IP=<your ip> -e AUTH_TYPE=HTTP -d ravihuang/gerrit
 
-    `docker run -d -p 8080:8080 -p 29418:29418 openfrontier/gerrit`
-
-  2. Open your browser to http://<docker host url>:8080
-
-## Use HTTP authentication type
-    docker run -d -p 8080:8080 -p 29418:29418 -e AUTH_TYPE=HTTP openfrontier/gerrit
-
+  2. Open your browser to http://<your ip>
+     
+  3. Default using HTTP authentication type
+     u/p: admin/passwd
+     
 ## Use another container as the gerrit site storage.
   1. Create a volume container.
 
-    `docker run --name gerrit_volume openfrontier/gerrit echo "Gerrit volume container."`
+    `docker run --name gerrit_volume ravihuang/gerrit echo "Gerrit volume container."`
 
   2. Initialize and start gerrit using volume created above.
 
-    `docker run -d --volumes-from gerrit_volume -p 8080:8080 -p 29418:29418 openfrontier/gerrit`
+    `docker run -d --volumes-from gerrit_volume -p 8080:8080 -p 29418:29418 ravihuang/gerrit`
 
-## Use local directory as the gerrit site storage.
-  1. Create a site directory for the gerrit site.
-
-    `mkdir ~/gerrit_volume`
-
-  2. Initialize and start gerrit using the local directory created above.
-
-    `docker run -d -v ~/gerrit_volume:/var/gerrit/review_site -p 8080:8080 -p 29418:29418 openfrontier/gerrit`
-
+# Just import from openfrontier/gerrit：
 ## Install plugins on start up.
   When calling gerrit init --batch, it is possible to list plugins to be installed with --install-plugin=<plugin_name>. This can be done using the GERRIT_INIT_ARGS environment variable. See [Gerrit Documentation](https://gerrit-review.googlesource.com/Documentation/pgm-init.html) for more information.
 
