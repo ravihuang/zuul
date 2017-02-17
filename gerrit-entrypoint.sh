@@ -49,7 +49,7 @@ if [ "$1" = "/gerrit-start.sh" ]; then
   done
 
   #Customize gerrit.config
-
+  
   #Section gerrit
   set_gerrit_config gerrit.canonicalWebUrl "http://127.0.0.1:8080"
   [ -z "${GITHTTPURL}" ] || set_gerrit_config gerrit.gitHttpUrl "${GITHTTPURL}"
@@ -58,7 +58,7 @@ if [ "$1" = "/gerrit-start.sh" ]; then
   [ -z "${LISTEN_ADDR}" ] || set_gerrit_config sshd.listenAddress "${LISTEN_ADDR}"
   
   #Section database
-  DATABASE_TYPE = "postgresql"
+  DATABASE_TYPE="postgresql"
   if [ "${DATABASE_TYPE}" = 'postgresql' ]; then
     set_gerrit_config database.type "${DATABASE_TYPE}"
     [ -z "${DB_PORT_5432_TCP_ADDR}" ]    || set_gerrit_config database.hostname "${DB_PORT_5432_TCP_ADDR}"
@@ -171,8 +171,14 @@ if [ "$1" = "/gerrit-start.sh" ]; then
   set_gerrit_config plugin.events-log.storePassword "${DB_ENV_POSTGRES_PASSWORD}"    
 
   #Section httpd
-  [ -z "${HTTPD_LISTENURL}" ] || set_gerrit_config httpd.listenUrl "${HTTPD_LISTENURL}"
-
+  set_gerrit_config httpd.listenUrl "proxy-http://*:8080/"
+  
+  #Events-log
+  set_gerrit_config plugin.events-log.storeDriver "org.postgresql.Driver"
+  set_gerrit_config plugin.events-log.storeUrl "jdbc:${DATABASE_TYPE}://${DB_PORT_5432_TCP_ADDR}/${DB_ENV_POSTGRES_DB}"                                     
+  set_gerrit_config plugin.events-log.storeUsername "${DB_ENV_POSTGRES_USER}"                                                                                            
+  set_secure_config plugin.events-log.storePassword "${DB_ENV_POSTGRES_PASSWORD}" 
+  
   #Section gitweb
   set_gerrit_config gitweb.type "gitweb"
   [ -z "${GITWEB_IP}" ] ||  set_gerrit_config gitweb.url "http://${GITWEB_IP}/gitweb/gitweb.cgi"
