@@ -173,7 +173,8 @@ if [ "$1" = "/gerrit-start.sh" ]; then
   [ -z "${HTTPD_LISTENURL}" ] || set_gerrit_config httpd.listenUrl "${HTTPD_LISTENURL}"
 
   #Section gitweb
-  set_gerrit_config gitweb.cgi "/usr/share/gitweb/gitweb.cgi"
+  set_gerrit_config gitweb.type "gitweb"
+  [ -z "${GITWEB_IP}" ] ||  set_gerrit_config gitweb.url "http://${GITWEB_IP}/gitweb/gitweb.cgi"
 
   echo "Upgrading gerrit..."
   su-exec ${GERRIT_USER} java ${JAVA_OPTIONS} ${JAVA_MEM_OPTIONS} -jar "${GERRIT_WAR}" init --batch -d "${GERRIT_SITE}" ${GERRIT_INIT_ARGS}
