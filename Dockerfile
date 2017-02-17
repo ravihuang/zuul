@@ -8,7 +8,7 @@ COPY spawn-fcgi /usr/bin/
 COPY start_nginx.sh /docker-entrypoint-init.d/
 COPY pg_config.sh /docker-entrypoint-init.d/
 
-RUN apk add apache2 apache2-utils fcgi fcgiwrap && \
+RUN apk add nginx apache2-utils fcgi fcgiwrap && \
     htpasswd -bc /var/gerrit/users admin passwd && \
     git config --global core.quotepath false && \
     git config --global i18n.logoutputencoding utf8 && \
