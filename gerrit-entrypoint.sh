@@ -44,19 +44,20 @@ if [ "$1" = "/gerrit-start.sh" ]; then
       *.sh)    echo "$0: running $f"; source "$f" ;;
       *.nohup) echo "$0: running $f"; nohup  "$f" & ;;
       *)       echo "$0: ignoring $f" ;;
-    esac
+    esac                     
     echo
   done
 
   #Customize gerrit.config
-  
+
   #Section gerrit
-  set_gerrit_config gerrit.canonicalWebUrl "http://127.0.0.1:8080"
+  #[ -z "${WEBURL}" ] || set_gerrit_config gerrit.canonicalWebUrl "http://*:8080"
+  set_gerrit_config gerrit.canonicalWebUrl "http://*:8080"
   [ -z "${GITHTTPURL}" ] || set_gerrit_config gerrit.gitHttpUrl "${GITHTTPURL}"
 
   #Section sshd
   [ -z "${LISTEN_ADDR}" ] || set_gerrit_config sshd.listenAddress "${LISTEN_ADDR}"
-  
+
   #Section database
   DATABASE_TYPE="postgresql"
   if [ "${DATABASE_TYPE}" = 'postgresql' ]; then
@@ -164,26 +165,26 @@ if [ "$1" = "/gerrit-start.sh" ]; then
 
   #Section plugin events-log
   #set_gerrit_config plugin.events-log.storeUrl "jdbc:h2:${GERRIT_SITE}/db/ChangeEvents"
-  #only for postgresql now
   set_gerrit_config plugin.events-log.storeDriver "org.postgresql.Driver"
   set_gerrit_config plugin.events-log.storeUrl "jdbc:${DATABASE_TYPE}://${DB_PORT_5432_TCP_ADDR}/${DB_ENV_POSTGRES_DB}"                                     
   set_gerrit_config plugin.events-log.storeUsername "${DB_ENV_POSTGRES_USER}"                                                                                            
   set_gerrit_config plugin.events-log.storePassword "${DB_ENV_POSTGRES_PASSWORD}"    
 
   #Section httpd
+  #[ -z "${HTTPD_LISTENURL}" ] || set_gerrit_config httpd.listenUrl "${HTTPD_LISTENURL}"
   set_gerrit_config httpd.listenUrl "proxy-http://*:8080/"
-    
-  #Section gitweb
-  set_gerrit_config gitweb.type "gitweb"
-  [ -z "${GITWEB_IP}" ] ||  set_gerrit_config gitweb.url "http://${GITWEB_IP}/gitweb/gitweb.cgi"
 
+  #Section gitweb
+  #set_gerrit_config gitweb.cgi "/usr/share/gitweb/gitweb.cgi"
+  set_gerrit_config gitweb.url "http://${GITWEB_IP}/gitweb/gitweb.cgi"
+  
   echo "Upgrading gerrit..."
   su-exec ${GERRIT_USER} java ${JAVA_OPTIONS} ${JAVA_MEM_OPTIONS} -jar "${GERRIT_WAR}" init --batch -d "${GERRIT_SITE}" ${GERRIT_INIT_ARGS}
   if [ $? -eq 0 ]; then
     echo "Reindexing..."
     su-exec ${GERRIT_USER} java ${JAVA_OPTIONS} ${JAVA_MEM_OPTIONS} -jar "${GERRIT_WAR}" reindex --verbose -d "${GERRIT_SITE}"
     echo "Upgrading is OK."
-  else
+  else                       
     echo "Something wrong..."
     cat "${GERRIT_SITE}/logs/error_log"
   fi
