@@ -8,7 +8,7 @@ COPY start_nginx.sh /docker-entrypoint-init.d/
 COPY gerrit-entrypoint.sh /
 
 RUN apk add nginx apache2-utils fcgi fcgiwrap && \
-    htpasswd -bc /var/gerrit/users admin passwd && \
+    htpasswd -bc /etc/nginx/users admin passwd && \
     git config --global core.quotepath false && \
     git config --global i18n.logoutputencoding utf8 && \
     git config --global i18n.commitencoding utf8 && \
