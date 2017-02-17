@@ -4,9 +4,10 @@
 
 ## Container Quickstart
   1. Initialize and start gerrit.
-     `# mkdir ~/gerrit_volume`
-     `# docker run --name pg-gerrit -p 5432:5432 -e POSTGRES_USER=gerrit2 -e POSTGRES_PASSWORD=gerrit -e POSTGRES_DB=reviewdb -d postgres`
-     `# docker run --name gerrit --link pg-gerrit:db -v /~/gerrit_volume/:/var/gerrit/review_site -p 80:80 -p 29418:29418 -e GITWEB_IP=<your ip> -e AUTH_TYPE=HTTP -d ravihuang/gerrit`
+ 
+     `mkdir ~/gerrit_volume`
+     `docker run --name pg-gerrit -p 5432:5432 -e POSTGRES_USER=gerrit2 -e POSTGRES_PASSWORD=gerrit -e POSTGRES_DB=reviewdb -d postgres`
+     `docker run --name gerrit --link pg-gerrit:db -v /~/gerrit_volume/:/var/gerrit/review_site -p 80:80 -p 29418:29418 -e GITWEB_IP=<your ip> -e AUTH_TYPE=HTTP -d ravihuang/gerrit`
 
   2. Open your browser to http://<your ip>
      
