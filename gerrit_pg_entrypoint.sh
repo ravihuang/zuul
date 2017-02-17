@@ -9,9 +9,6 @@ set_secure_config() {
 }
 export WEBURL="http://127.0.0.1:8080"
 export DATABASE_TYPE="postgresql"
-export 
-
-/gerrit-entrypoint.sh
 
 set_gerrit_config plugin.events-log.storeDriver "org.postgresql.Driver"
 set_gerrit_config plugin.events-log.storeUrl "jdbc:${DATABASE_TYPE}://${DB_PORT_5432_TCP_ADDR}/${DB_ENV_POSTGRES_DB}"                                     
