@@ -175,7 +175,7 @@ if [ "$1" = "/gerrit-start.sh" ]; then
   set_gerrit_config httpd.listenUrl "proxy-http://*:8080/"
 
   #Section gitweb
-  #set_gerrit_config gitweb.cgi "/usr/share/gitweb/gitweb.cgi"
+  set_gerrit_config gitweb.type "gitweb"
   set_gerrit_config gitweb.url "http://${GITWEB_IP}/gitweb/gitweb.cgi"
   
   echo "Upgrading gerrit..."
