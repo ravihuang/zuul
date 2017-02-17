@@ -51,13 +51,14 @@ if [ "$1" = "/gerrit-start.sh" ]; then
   #Customize gerrit.config
 
   #Section gerrit
-  [ -z "${WEBURL}" ] || set_gerrit_config gerrit.canonicalWebUrl "${WEBURL}"
+  set_gerrit_config gerrit.canonicalWebUrl "http://127.0.0.1:8080"
   [ -z "${GITHTTPURL}" ] || set_gerrit_config gerrit.gitHttpUrl "${GITHTTPURL}"
 
   #Section sshd
   [ -z "${LISTEN_ADDR}" ] || set_gerrit_config sshd.listenAddress "${LISTEN_ADDR}"
-
+  
   #Section database
+  DATABASE_TYPE = "postgresql"
   if [ "${DATABASE_TYPE}" = 'postgresql' ]; then
     set_gerrit_config database.type "${DATABASE_TYPE}"
     [ -z "${DB_PORT_5432_TCP_ADDR}" ]    || set_gerrit_config database.hostname "${DB_PORT_5432_TCP_ADDR}"
