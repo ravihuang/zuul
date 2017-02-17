@@ -3,7 +3,7 @@ FROM openfrontier/gerrit
 MAINTAINER ravih <ravi.huang@gmail.com>
 
 COPY nginx.conf /etc/nginx/
-COPY start_apache.sh /docker-entrypoint-init.d/
+COPY start_nginx.sh /docker-entrypoint-init.d/
 COPY fcgi-run /etc/init.d/
 COPY spawn-fcgi /usr/bin/
 
