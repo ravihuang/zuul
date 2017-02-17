@@ -3,10 +3,10 @@ FROM openfrontier/gerrit
 MAINTAINER ravih <ravi.huang@gmail.com>
 
 COPY nginx.conf /etc/nginx/
-COPY start_nginx.sh /docker-entrypoint-init.d/
 COPY fcgi-run /etc/init.d/
 COPY spawn-fcgi /usr/bin/
-COPY gerrit_pg_entrypoint.sh /
+COPY start_nginx.sh /docker-entrypoint-init.d/
+COPY pg_config.sh /docker-entrypoint-init.d/
 
 RUN apk add apache2 apache2-utils fcgi fcgiwrap && \
     htpasswd -bc /var/gerrit/users admin passwd && \
