@@ -172,7 +172,7 @@ if [ "$1" = "/gerrit-start.sh" ]; then
 
   #Section httpd
   #[ -z "${HTTPD_LISTENURL}" ] || set_gerrit_config httpd.listenUrl "${HTTPD_LISTENURL}"
-  set_gerrit_config httpd.listenUrl "proxy-http://*:8080/"
+  set_gerrit_config httpd.listenUrl "proxy-http://127.0.0.1:8080/"
 
   #Section gitweb
   set_gerrit_config gitweb.type "gitweb"
