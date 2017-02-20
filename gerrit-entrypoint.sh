@@ -52,7 +52,7 @@ if [ "$1" = "/gerrit-start.sh" ]; then
 
   #Section gerrit
   #[ -z "${WEBURL}" ] || set_gerrit_config gerrit.canonicalWebUrl "http://*:8080"
-  set_gerrit_config gerrit.canonicalWebUrl "http://*:8080"
+  set_gerrit_config gerrit.canonicalWebUrl "http://127.0.0.1:8080"
   [ -z "${GITHTTPURL}" ] || set_gerrit_config gerrit.gitHttpUrl "${GITHTTPURL}"
 
   #Section sshd
