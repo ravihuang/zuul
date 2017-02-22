@@ -1,0 +1,12 @@
+pipelines:
+  - name: periodic
+    source: gerrit
+    manager: IndependentPipelineManager
+    trigger:
+      timer:
+        - time: '0 * * * *'
+
+projects:
+  - name: aproject
+    periodic:
+      - aproject-periodic-build
