@@ -8,6 +8,7 @@ COPY gerrit-entrypoint.sh /
 RUN apk add python python-dev py-pip gcc libc-dev && \
     pip install zuul && \
     mkdir /etc/zuul && \
+    mkdir /zuul_git && \
     apk del gcc 
     
 COPY zuul.conf /etc/zuul/
